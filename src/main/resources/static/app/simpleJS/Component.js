@@ -23,6 +23,7 @@ class Component {
     markup;
     messageTimeout = 5000;
     subcomponents = {};
+    childcomponents = {};
 
     beforeGenerate = {};
     afterGenerate = {};
@@ -174,6 +175,13 @@ class Component {
         this.subcomponents = subcomponents
         for(let subcomponent in this.subcomponents){
             this.subcomponents[subcomponent]._parent = this;
+        }
+    }
+
+    registerChildcomponents(childcomponents){
+        this.childcomponents = childcomponents
+        for(let child in this.childcomponents){
+            this.childcomponents[child]._parent = this;
         }
     }
 

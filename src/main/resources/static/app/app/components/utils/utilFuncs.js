@@ -134,7 +134,6 @@ export function getDate(datetimeString){
 export async function loadUser(){
     await axios.get('/api/v1/users/current')
     .then(async function(response){
-        console.log(response.data.data);
         await this.setData('user', response.data.data)
     }.bind(this)).catch(function(error){
         throw new Error('User could not be loaded!')

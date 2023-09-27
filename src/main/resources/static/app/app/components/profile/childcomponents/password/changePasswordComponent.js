@@ -48,7 +48,7 @@ async function changePassword(){
     }.bind(this))
 }
 
-const changePasswordSubcomponent = new Component({
+const changePasswordComponent = new Component({
     name: 'Change password',
     container: '#tab-content',
     messageContainer: '#message-container',
@@ -62,4 +62,4 @@ const changePasswordSubcomponent = new Component({
     }
 })
 
-export default changePasswordSubcomponent;
+export default changePasswordComponent;

@@ -19,7 +19,7 @@ async function menuMarkup(){
                 <a href="#"><i class="fa-solid fa-person-praying"></i> izposoja</a>
                 <a href="#vnesi"><i class="fa-solid fa-hammer"></i> vnesi</a>
                 <br>
-                <a href="#profil"><i class="fa-solid fa-user"></i> Profil</a>
+                <a href="#profil/podatki"><i class="fa-solid fa-user"></i> Profil</a>
                 <br>
                 <a href="/logout" style="color: red"><i class="fa-solid fa-person-through-window"></i> odjava</a>
             </div>

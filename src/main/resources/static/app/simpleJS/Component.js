@@ -107,6 +107,9 @@ class Component {
         for(let subcomponent in this.subcomponents){
             await this.subcomponents[subcomponent]._registerApp(app);
         }
+        for(let child in this.childcomponents){
+            await this.childcomponents[child]._registerApp(app);
+        }
     }
 
     unsetMessage(){
@@ -142,6 +145,10 @@ class Component {
 
     setQueryParams(params){
         this._app.setQueryParams(params);
+    }
+
+    get path(){
+        return this._app.path;
     }
 
     get queryParams(){

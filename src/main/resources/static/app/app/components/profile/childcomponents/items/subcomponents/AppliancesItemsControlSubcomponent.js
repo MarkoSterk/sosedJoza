@@ -65,9 +65,6 @@ const AppliancesItemsControlSubcomponent = new Component({
     metaData: {
         applianceUrl: `${API_BASE_URL}/api/v1/appliances/`
     },
-    beforeGenerate: {
-        getItems
-    },
     methods: {
         searchItems
     }

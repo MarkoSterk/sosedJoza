@@ -69,7 +69,7 @@ async function uploadProfileImage(){
     }.bind(this))
 }
 
-const profileDataSubcomponent = new Component({
+const profileDataComponent = new Component({
     name: 'Profile data',
     container: '#tab-content',
     messageContainer: '#message-container',
@@ -84,4 +84,4 @@ const profileDataSubcomponent = new Component({
     }
 })
 
-export default profileDataSubcomponent;
+export default profileDataComponent;

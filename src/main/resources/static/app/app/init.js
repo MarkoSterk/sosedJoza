@@ -5,6 +5,9 @@ import urediComponent from "./components/uredi/urediComponent.js";
 import itemComponent from "./components/item/itemComponent.js";
 import menuComponent from "./components/menu/menuComponent.js";
 import userProfileComponent from "./components/profile/userProfileComponent.js";
+import profileDataComponent from "./components/profile/childcomponents/profileData/profileDataComponent.js";
+import changePasswordComponent from "./components/profile/childcomponents/password/changePasswordComponent.js";
+import myAppliancesComponent from "./components/profile/childcomponents/items/myAppliancesComponent.js";
 import { loadUser } from "./components/utils/utilFuncs.js";
 
 
@@ -35,9 +38,9 @@ await app.addPaths({
     "profil": {
                 component: userProfileComponent,
                 children: {
-                    "podatki": {component: profileData},
-                    "geslo": {component: changePassword},
-                    "predmeti": {component: myAppliances}
+                    "podatki": {component: profileDataComponent},
+                    "geslo": {component: changePasswordComponent},
+                    "predmeti": {component: myAppliancesComponent}
                 }
               }
 });

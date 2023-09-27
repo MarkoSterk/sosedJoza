@@ -14,6 +14,7 @@ class App{
     beforeStart = {};
     _activeComponents = [];
     _registeredPaths = [];
+    _router;
 
     constructor(configs){
         this.name = configs.name
@@ -37,7 +38,7 @@ class App{
         }
     }
 
-    function getAllPathSequences(data, parentPath = "") {
+    getAllPathSequences(data, parentPath = "") {
       const pathSequences = [];
 
       for (const key in data) {
@@ -47,7 +48,7 @@ class App{
         }
 
         if (data[key].children) {
-          const childPathSequences = getAllPathSequences(data[key].children, currentPath);
+          const childPathSequences = this.getAllPathSequences(data[key].children, currentPath);
           pathSequences.push(...childPathSequences);
         }
       }
@@ -68,7 +69,6 @@ class App{
         }
 
         this._registeredPaths = this.getAllPathSequences(components);
-        console.log(this._registeredPaths);
     }
 
     setQueryParams(params){
@@ -105,7 +105,11 @@ class App{
         this.index = index
     }
 
-    async start(route){
+    get path(){
+        return this._router.currentView;
+    }
+
+    async start(routePath){
         /**
          * Starts the app and loads first/index component. Defaults to the index component if set, otherwise loads first component in components.
          * @param {String} route String name or hash of the start component
@@ -116,17 +120,20 @@ class App{
         for(let component in this.staticComponents){
             await this.staticComponents[component].generateComponent();
         }
-        if(route && route in this.components){
-            await this.components[route].generateComponent()
-            return route;
+        if(routePath && this._registeredPaths.includes(routePath)){
+            const pathComponents = this._router._getPathComponents(this.components, routePath);
+            for(const component of pathComponents){
+                if(component) await component.generateComponent();
+            }
+            return routePath;
         }
         else if(this.index){
-            await this.components[this.index].generateComponent();
+            await this.components[this.index].component.generateComponent();
             return this.index;
         }
         else{
             route = Object.keys(this.components)[0]
-            await this.components[route].generateComponent();
+            await this.components[route].component.generateComponent();
             return route;
         }
     }

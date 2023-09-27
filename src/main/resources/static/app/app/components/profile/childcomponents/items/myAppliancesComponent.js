@@ -3,6 +3,7 @@ import AppliancesItemsSubcomponent from "./AppliancesItemsSubcomponent.js";
 import AppliancesItemsControlSubcomponent from "./AppliancesItemsControlSubcomponent.js";
 import AppliancesItemsPaginationSubcomponent from "./AppliancesItemsPaginationSubcomponent.js";
 import { API_BASE_URL } from "../../../../configurations.js";
+import {getItems} from "./utilFuncs.js"
 
 async function myAppliancesMarkup(){
     return `
@@ -12,16 +13,29 @@ async function myAppliancesMarkup(){
     `
 }
 
-const myAppliancesSubcomponent = new Component({
+function setQueryParams(){
+    let user = this.getData('user');
+    let params = `?userId=${user.id}&rating=0&orderBy=-createdAt&page=0&perPage=10`;
+    this.setQueryParams(params);
+}
+
+const myAppliancesComponent = new Component({
     name: 'My appliances',
-    container: '#nav-moji-predmeti',
+    container: '#tab-content',
     messageContainer: '#message-container',
     markup: myAppliancesMarkup,
     subcomponents: {
         AppliancesItemsControlSubcomponent,
         AppliancesItemsSubcomponent,
         AppliancesItemsPaginationSubcomponent
+    },
+    metaData: {
+        applianceUrl: `${API_BASE_URL}/api/v1/appliances/`
+    },
+    beforeGenerate: {
+        setQueryParams,
+        getItems
     }
 })
 
-export default myAppliancesSubcomponent;
+export default myAppliancesComponent;

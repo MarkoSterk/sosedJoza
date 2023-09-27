@@ -71,7 +71,7 @@ async function uploadProfileImage(){
 
 const profileDataSubcomponent = new Component({
     name: 'Profile data',
-    container: '#nav-podatki',
+    container: '#tab-content',
     messageContainer: '#message-container',
     dataField: 'user',
     markup: profileDataMarkup,

@@ -35,9 +35,9 @@ await app.addPaths({
     "profil": {
                 component: userProfileComponent,
                 children: {
-                    "profile": {component: profileData},
-                    "password": {component: changePassword},
-                    "items": {component: myAppliances}
+                    "podatki": {component: profileData},
+                    "geslo": {component: changePassword},
+                    "predmeti": {component: myAppliances}
                 }
               }
 });

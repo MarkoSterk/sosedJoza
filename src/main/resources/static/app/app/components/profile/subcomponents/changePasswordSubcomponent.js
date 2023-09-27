@@ -50,7 +50,7 @@ async function changePassword(){
 
 const changePasswordSubcomponent = new Component({
     name: 'Change password',
-    container: '#nav-geslo',
+    container: '#tab-content',
     messageContainer: '#message-container',
     dataField: 'user',
     markup: changePasswordMarkup,

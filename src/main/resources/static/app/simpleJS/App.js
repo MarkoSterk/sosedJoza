@@ -61,8 +61,10 @@ class App{
          * @param  {Object} components  Object with app components. If used with router the keys of the object refer to the hash address
          */
         this.components = components
-        for(let component in this.components){
-            this.components[component]._registerApp(this);
+        for(let path in this.components){
+            if(this.components[path].component){
+                this.components[path].component._registerApp(this);
+            }
         }
 
         this._registeredPaths = this.getAllPathSequences(components);

@@ -24,9 +24,35 @@ class Router {
         return hashPath;
     }
 
+    _findPathDifference(currentPath, newPath) {
+        const currentParts = currentPath.split("/");
+        const newParts = newPath.split("/");
+        const minLength = Math.min(currentParts.length, newParts.length);
+        let diffIndex = -1;
+
+        for (let i = 0; i < minLength; i++) {
+            if (currentParts[i] !== newParts[i]) {
+                diffIndex = i;
+                break;
+            }
+        }
+
+      if (diffIndex === -1) return null;
+
+      const commonPart = currentParts.slice(0, diffIndex);
+      const difference1 = currentParts.slice(diffIndex);
+      const difference2 = newParts.slice(diffIndex);
+
+      return {
+            commonPart: commonPart,
+            difference1: difference1 || undefined,
+            difference2: difference2 || undefined
+      };
+    }
+
     _onUrlChange(event){
         const routePath = this._getRouteAndQueryParams();
-        if(routePath in this.app.components){
+        if(routePath in this.paths){
             this._changeView(routePath);
         }
         else{
@@ -34,16 +60,36 @@ class Router {
         }
     }
 
+    async _deconstructPathComponents(pathDiff){
+        for(let part of this.currentView.split('/').reverse()){
+            if(!pathDiff.commonPart.includes(part)){
+                if(this.app.components[part].component){
+                    await this.app.components[part].component.deconstructComponent();
+                }
+            }
+        }
+    }
+
     async _changeView(routePath) {
-        if(!this.unknownViewActive){
-            await this.app.components[this.currentView].deconstructComponent();
+        let pathDiff = this._findPathDifference(currentView, routePath);
+        if(routeDiff){
+            if(!this.unknownViewActive){
+                await this._deconstructPathComponents(pathDiff)
+            }
+            else{
+                await this._deconstructPathComponents([]);
+                await this.unknownView.deconstructComponent();
+                this.unknownViewActive = false;
+            }
+            for(let part of routePath.split('/')){
+                if(!pathDiff.commonPart.includes(part)){
+                    if(this.app.components[part].component){
+                        await this.app.components[part].component.generateComponent();
+                    }
+                }
+            }
+            this.currentView = routePath;
         }
-        else{
-            await this.unknownView.deconstructComponent();
-            this.unknownViewActive = false;
-        }
-        await this.app.components[routePath].generateComponent();
-        this.currentView = routePath;
     }
 
     async _unknownView() {

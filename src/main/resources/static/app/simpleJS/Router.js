@@ -56,6 +56,10 @@ class Router {
         this.unknownView = component;
     }
 
+    get paths(){
+        return this.app._registeredPaths;
+    }
+
     async start(){
         /**
          * Starts the app

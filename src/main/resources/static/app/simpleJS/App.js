@@ -13,6 +13,7 @@ class App{
     _dataMapping = {};
     beforeStart = {};
     _activeComponents = [];
+    _registeredPaths = [];
 
     constructor(configs){
         this.name = configs.name
@@ -36,7 +37,25 @@ class App{
         }
     }
 
-    async addComponents(components){
+    function getAllPathSequences(data, parentPath = "") {
+      const pathSequences = [];
+
+      for (const key in data) {
+        const currentPath = parentPath ? `${parentPath}/${key}` : key;
+        if (data[key].component !== null) {
+          pathSequences.push(currentPath);
+        }
+
+        if (data[key].children) {
+          const childPathSequences = getAllPathSequences(data[key].children, currentPath);
+          pathSequences.push(...childPathSequences);
+        }
+      }
+
+      return pathSequences;
+    }
+
+    async addPaths(components){
         /**
          * Adds top-level components to the App.
          * @param  {Object} components  Object with app components. If used with router the keys of the object refer to the hash address
@@ -45,6 +64,9 @@ class App{
         for(let component in this.components){
             this.components[component]._registerApp(this);
         }
+
+        this._registeredPaths = this.getAllPathSequences(components);
+        console.log(this._registeredPaths);
     }
 
     setQueryParams(params){

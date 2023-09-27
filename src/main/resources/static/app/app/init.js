@@ -27,12 +27,19 @@ app.addStaticComponents({
     menuComponent
 })
 
-await app.addComponents({
-    "index": indexComponent,
-    "vnesi": vnesiComponent,
-    "uredi": urediComponent,
-    "predmet": itemComponent,
-    "profil": userProfileComponent
+await app.addPaths({
+    "index": {component: indexComponent},
+    "vnesi": {component: vnesiComponent},
+    "uredi": {component: urediComponent},
+    "predmet": {component: itemComponent},
+    "profil": {
+                component: userProfileComponent,
+                children: {
+                    "profile": {component: profileData},
+                    "password": {component: changePassword},
+                    "items": {component: myAppliances}
+                }
+              }
 });
 
 app.setIndex('index');

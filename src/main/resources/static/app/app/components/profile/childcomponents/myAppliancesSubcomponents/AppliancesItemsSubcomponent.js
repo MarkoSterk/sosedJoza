@@ -1,6 +1,6 @@
-import Component from "../../../../simpleJS/Component.js";
-import { API_BASE_URL } from "../../../../configurations.js";
-import { getDate } from "../../utils/utilFuncs.js";
+import Component from "../../../../../simpleJS/Component.js";
+import { API_BASE_URL } from "../../../../../configurations.js";
+import { getItems, parseQueryParams, stringifyQueryParams, getDate } from "../../../utils/utilFuncs.js";
 
 async function AppliancesItemsMarkup(){
     let appliances = this.data;

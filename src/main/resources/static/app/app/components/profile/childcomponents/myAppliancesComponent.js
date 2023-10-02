@@ -1,9 +1,9 @@
 import Component from "../../../../simpleJS/Component.js";
-import AppliancesItemsSubcomponent from "./AppliancesItemsSubcomponent.js";
-import AppliancesItemsControlSubcomponent from "./AppliancesItemsControlSubcomponent.js";
-import AppliancesItemsPaginationSubcomponent from "./AppliancesItemsPaginationSubcomponent.js";
 import { API_BASE_URL } from "../../../../configurations.js";
-import {getItems} from "./utilFuncs.js"
+import { getItems } from "../../utils/utilFuncs.js";
+import AppliancesItemsControlSubcomponent from "./myAppliancesSubcomponents/AppliancesItemsControlSubcomponent.js";
+import AppliancesItemsPaginationSubcomponent from "./myAppliancesSubcomponents/AppliancesItemsPaginationSubcomponent.js"
+import AppliancesItemsSubcomponent from "./myAppliancesSubcomponents/AppliancesItemsSubcomponent.js"
 
 async function myAppliancesMarkup(){
     return `
@@ -24,13 +24,13 @@ const myAppliancesComponent = new Component({
     container: '#tab-content',
     messageContainer: '#message-container',
     markup: myAppliancesMarkup,
-    subcomponents: {
-        AppliancesItemsControlSubcomponent,
-        AppliancesItemsSubcomponent,
-        AppliancesItemsPaginationSubcomponent
-    },
     metaData: {
         applianceUrl: `${API_BASE_URL}/api/v1/appliances/`
+    },
+    subcomponents: {
+        AppliancesItemsControlSubcomponent,
+        AppliancesItemsPaginationSubcomponent,
+        AppliancesItemsSubcomponent
     },
     beforeGenerate: {
         setQueryParams,

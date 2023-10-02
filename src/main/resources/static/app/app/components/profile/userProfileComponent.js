@@ -1,11 +1,10 @@
 import Component from "../../../simpleJS/Component.js";
-import changePasswordComponent from "./childcomponents/changePasswordComponent.js";
 import profileDataComponent from "./childcomponents/profileDataComponent.js";
+import changePasswordComponent from "./childcomponents/changePasswordComponent.js";
 import myAppliancesComponent from "./childcomponents/myAppliancesComponent.js";
 import { API_BASE_URL } from "../../../configurations.js";
 
 async function userProfileComponentMarkup(){
-    const currentPath = this.path ? this.path.split("/") : ['profil', 'podatki'];
     return `
         <div class="row bg-light">
             <div class="col-11 col-sm-11 col-md-11 col-lg-9 mx-auto my-5">
@@ -32,8 +31,8 @@ const userProfileComponent = new Component({
     messageContainer: '#message-container',
     markup: userProfileComponentMarkup,
     childcomponents: {
-        changePasswordComponent,
         profileDataComponent,
+        changePasswordComponent,
         myAppliancesComponent
     }
 })

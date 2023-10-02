@@ -1,6 +1,7 @@
 import Component from "../../../../simpleJS/Component.js";
 import { API_BASE_URL } from "../../../../configurations.js";
 
+
 async function profileDataMarkup(){
     let user = this.data;
     return `
@@ -68,6 +69,7 @@ async function uploadProfileImage(){
         error.response.data.status);
     }.bind(this))
 }
+
 
 const profileDataComponent = new Component({
     name: 'Profile data',

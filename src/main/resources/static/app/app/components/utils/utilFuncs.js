@@ -139,3 +139,16 @@ export async function loadUser(){
         throw new Error('User could not be loaded!')
     }.bind(this))
 }
+
+export async function getItems(){
+    let url = this.metaData.applianceUrl + this.queryParams;
+    console.log('Get URL: ', url);
+    await axios.get(url)
+    .then(function(response){
+        this.setData('pagination', parsePagination(response.data.data));
+        this.setData('items', response.data.data.content)
+    }.bind(this))
+    .catch(function(error){
+        console.log(error)
+    }.bind(this))
+}

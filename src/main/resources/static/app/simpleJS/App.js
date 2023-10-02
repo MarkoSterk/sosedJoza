@@ -38,37 +38,45 @@ class App{
         }
     }
 
-    getAllPathSequences(data, parentPath = "") {
-      const pathSequences = [];
+    extractPathsAndComponents(data, currentPath = "") {
+        const result = {};
 
-      for (const key in data) {
-        const currentPath = parentPath ? `${parentPath}/${key}` : key;
-        if (data[key].component !== null) {
-          pathSequences.push(currentPath);
+        for (const key in data) {
+            const newPath = currentPath ? `${currentPath}/${key}` : key;
+            const component = data[key].component;
+            const children = data[key].children;
+
+            if (component !== null) {
+                result[newPath] = [component];
+            }
+
+            if (children) {
+                const childResult = this.extractPathsAndComponents(children, newPath);
+                for (const childKey in childResult) {
+                    result[childKey] = [component, ...childResult[childKey]];
+                }
+            }
         }
 
-        if (data[key].children) {
-          const childPathSequences = this.getAllPathSequences(data[key].children, currentPath);
-          pathSequences.push(...childPathSequences);
-        }
-      }
+        return result;
+    }
 
-      return pathSequences;
+    async registerAppToComponents(){
+        for(let path of Object.keys(this._registeredPaths)){
+            for(let component of this._registeredPaths[path]){
+                if(!component._app) await component._registerApp(this);
+            }
+        }
     }
 
     async addPaths(components){
         /**
-         * Adds top-level components to the App.
+         * Adds components to the App.
          * @param  {Object} components  Object with app components. If used with router the keys of the object refer to the hash address
          */
-        this.components = components
-        for(let path in this.components){
-            if(this.components[path].component){
-                this.components[path].component._registerApp(this);
-            }
-        }
-
-        this._registeredPaths = this.getAllPathSequences(components);
+        this._registeredPaths = this.extractPathsAndComponents(components);
+        console.log(this._registeredPaths);
+        this.registerAppToComponents();
     }
 
     setQueryParams(params){
@@ -120,8 +128,8 @@ class App{
         for(let component in this.staticComponents){
             await this.staticComponents[component].generateComponent();
         }
-        if(routePath && this._registeredPaths.includes(routePath)){
-            const pathComponents = this._router._getPathComponents(this.components, routePath);
+        if(routePath && Object.keys(this._registeredPaths).includes(routePath)){
+            const pathComponents = this._registeredPaths[routePath];
             for(const component of pathComponents){
                 if(component) await component.generateComponent();
             }

@@ -100,15 +100,17 @@ class Component {
     }
 
     async _registerApp(app){
-        this._app = app;
-        if(this.dataField){
-            this._app._dataMapping[this.dataField].push(this);
-        }
-        for(let subcomponent in this.subcomponents){
-            await this.subcomponents[subcomponent]._registerApp(app);
-        }
-        for(let child in this.childcomponents){
-            await this.childcomponents[child]._registerApp(app);
+        if(!this._app){
+            this._app = app;
+            if(this.dataField){
+                this._app._dataMapping[this.dataField].push(this);
+            }
+            for(let subcomponent in this.subcomponents){
+                await this.subcomponents[subcomponent]._registerApp(app);
+            }
+            for(let child in this.childcomponents){
+                await this.childcomponents[child]._registerApp(app);
+            }
         }
     }
 

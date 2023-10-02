@@ -1,7 +1,6 @@
-import Component from "../../../../simpleJS/Component.js";
-import { API_BASE_URL } from "../../../../configurations.js";
-import { parseQueryParams, stringifyQueryParams } from "../../utils/utilFuncs.js";
-import { getItems } from "./utilFuncs.js";
+import Component from "../../../../../simpleJS/Component.js";
+import { API_BASE_URL } from "../../../../../configurations.js";
+import { getItems, parseQueryParams, stringifyQueryParams } from "../../../utils/utilFuncs.js";
 
 async function AppliancesItemsPaginationMarkup(){
     let paging = this.data;

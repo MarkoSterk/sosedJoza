@@ -52,7 +52,6 @@ const changePasswordComponent = new Component({
     name: 'Change password',
     container: '#tab-content',
     messageContainer: '#message-container',
-    dataField: 'user',
     markup: changePasswordMarkup,
     metaData: {
         userUrl: `${API_BASE_URL}/api/v1/users`

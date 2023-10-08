@@ -85,7 +85,9 @@ class Component {
             'sjs-click': 'click',
             'sjs-dblclick': 'dblclick',
             'sjs-hover': 'mouseover',
-            'sjs-change': 'change'
+            'sjs-change': 'change',
+            'sjs-input': 'input',
+            'sjs-focusout': 'focusout'
         }
         for(let eventType in allEventTypes){
             let allElems = [...document.querySelector(this.container).querySelectorAll(`[${eventType}]`)]

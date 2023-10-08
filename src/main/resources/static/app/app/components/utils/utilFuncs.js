@@ -32,7 +32,9 @@ export async function addItem(btn, event, data){
     .then(function(response){
         location.hash = `predmet?id=${response.data.data.id}`
     }.bind(this)).catch(function(error){
-        populateErrors.bind(this)(error.response.data)
+        this.setMessage(error.response.data.message,
+                        "danger");
+        populateErrors.bind(this)(error.response.data.data)
     }.bind(this))
 }
 
@@ -44,7 +46,7 @@ export async function updateItem(btn, event, data){
     .then(function(response){
         location.hash = `predmet?id=${response.data.data.id}`
     }.bind(this)).catch(function(error){
-        populateErrors.bind(this)(error.response.data)
+        populateErrors.bind(this)(error.response.data.data);
     }.bind(this))
 }
 
@@ -56,10 +58,10 @@ export function removeErrors(fields){
     }
 }
 
-export function populateErrors(error){
-    for(const [name, msg] of Object.entries(error.detail.json)){
+export function populateErrors(errors){
+    for(const [name, msg] of Object.entries(errors)){
         const field = document.getElementById(`${name}-error`);
-        field.classList.add("bg-danger");
+        field.classList.add("text-danger");
         field.innerHTML = msg;
     }
 }

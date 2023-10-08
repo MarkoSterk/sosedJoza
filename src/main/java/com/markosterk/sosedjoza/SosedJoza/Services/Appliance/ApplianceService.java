@@ -4,6 +4,7 @@ import com.markosterk.sosedjoza.SosedJoza.Controllers.Error.Errors.FileError;
 import com.markosterk.sosedjoza.SosedJoza.Controllers.Error.Errors.RecordNotFound;
 import com.markosterk.sosedjoza.SosedJoza.Controllers.Error.Errors.UnauthorizedError;
 import com.markosterk.sosedjoza.SosedJoza.Models.Appliance.Appliance;
+import com.markosterk.sosedjoza.SosedJoza.Models.Appliance.Schemas.ApplianceSearchQueryParams;
 import com.markosterk.sosedjoza.SosedJoza.Models.Appliance.Schemas.ApplianceUrlQueryParams;
 import com.markosterk.sosedjoza.SosedJoza.Models.Appliance.Schemas.CreateAppliance;
 import com.markosterk.sosedjoza.SosedJoza.Models.Rating.Schemas.RateAppliance;
@@ -160,6 +161,16 @@ public class ApplianceService {
         return ResponseUtil.generic(appliance.get(),
                 "success",
                 "Appliance rated successfully",
+                HttpStatus.OK);
+    }
+
+    public ResponseEntity<ApiResponse<Object>> searchAppliances(ApplianceSearchQueryParams params) {
+        Page<Appliance> appliances = applianceRepo.findBySearch(params.getName(),
+                                                                params.getDepartment(),
+                                                                params.getPagination());
+        return ResponseUtil.generic(appliances,
+                "success",
+                "Search completed successfully",
                 HttpStatus.OK);
     }
 }

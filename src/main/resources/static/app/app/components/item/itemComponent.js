@@ -72,7 +72,6 @@ async function itemComponentMarkup(){
 }
 
 async function fetchItem(){
-    console.log('Fetching item:', this.queryParams);
     const queryParams = parseQueryParams(this.queryParams);
     await axios.get(this.metaData.url+queryParams.id)
     .then(function(response){

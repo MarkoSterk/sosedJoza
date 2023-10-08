@@ -6,8 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
-
 public interface ApplianceRepo extends JpaRepository<Appliance, Long> {
 
     @Query("SELECT a from Appliance a WHERE (:userId IS NULL OR a.owner.id = :userId) AND a.department IN :department AND a.available IN :available AND a.rating >= :rating")
@@ -16,4 +14,8 @@ public interface ApplianceRepo extends JpaRepository<Appliance, Long> {
                                              boolean[] available,
                                              Number rating,
                                              Pageable pageable);
+    @Query("SELECT a from Appliance a WHERE a.name LIKE %:name% AND a.department IN :department")
+    Page<Appliance> findBySearch(String name,
+                                 String[] department,
+                                 Pageable pageable);
 }

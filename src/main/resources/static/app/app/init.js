@@ -4,6 +4,7 @@ import vnesiComponent from "./components/vnesi/vnesiComponent.js";
 import urediComponent from "./components/uredi/urediComponent.js";
 import itemComponent from "./components/item/itemComponent.js";
 import menuComponent from "./components/menu/menuComponent.js";
+import searchComponent from "./components/search/searchComponent.js";
 import userProfileComponent from "./components/profile/userProfileComponent.js";
 import profileDataComponent from "./components/profile/childcomponents/profileDataComponent.js";
 import changePasswordComponent from "./components/profile/childcomponents/changePasswordComponent.js";
@@ -21,7 +22,8 @@ const app = new App({
         pagination: null,
         item: null,
         previews: null,
-        itemRating: null
+        itemRating: null,
+        searchPreview: null
     },
     beforeStart: {
         loadUser
@@ -29,7 +31,8 @@ const app = new App({
 });
 
 app.addStaticComponents({
-    menuComponent
+    menuComponent,
+    searchComponent
 })
 
 await app.addPaths({

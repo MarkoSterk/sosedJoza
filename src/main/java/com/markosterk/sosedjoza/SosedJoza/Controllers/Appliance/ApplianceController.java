@@ -1,6 +1,7 @@
 package com.markosterk.sosedjoza.SosedJoza.Controllers.Appliance;
 
 import com.markosterk.sosedjoza.SosedJoza.Controllers.Error.Errors.ValidationError;
+import com.markosterk.sosedjoza.SosedJoza.Models.Appliance.Schemas.ApplianceSearchQueryParams;
 import com.markosterk.sosedjoza.SosedJoza.Models.Appliance.Schemas.ApplianceUrlQueryParams;
 import com.markosterk.sosedjoza.SosedJoza.Models.Appliance.Schemas.CreateAppliance;
 import com.markosterk.sosedjoza.SosedJoza.Models.Rating.Schemas.RateAppliance;
@@ -68,13 +69,19 @@ public class ApplianceController {
         return applianceService.uploadImages(images);
     }
 
-    @PostMapping("rating/{id}")
+    @PostMapping("/rating/{id}")
     public ResponseEntity<ApiResponse<Object>> rateAppliance(@PathVariable long id,
                                                              @Validated @RequestBody RateAppliance data,
                                                              BindingResult bindingResult,
                                                              @AuthenticationPrincipal User currentUser){
         if(bindingResult.hasErrors()){throw new ValidationError(bindingResult.getAllErrors());}
         return applianceService.rateAppliance(id, data, currentUser);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<ApiResponse<Object>> searchAppliances(@RequestParam Map<String,String> queryParams){
+        ApplianceSearchQueryParams params = new ApplianceSearchQueryParams(queryParams);
+        return applianceService.searchAppliances(params);
     }
 
 

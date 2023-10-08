@@ -75,7 +75,7 @@ class App{
          * @param  {Object} components  Object with app components. If used with router the keys of the object refer to the hash address
          */
         this._registeredPaths = this.extractPathsAndComponents(components);
-        console.log(this._registeredPaths);
+        //console.log(this._registeredPaths);
         this.registerAppToComponents();
     }
 

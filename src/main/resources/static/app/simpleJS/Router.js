@@ -47,8 +47,27 @@ class Router {
         }
     }
 
+    async _reconstructCurrentComponent(pathComponents){
+        /*
+        Regenerates last child component of the path.
+        Can be expanded to all current components if needed.
+        */
+        await pathComponents[pathComponents.length - 1].deconstructComponent();
+        await pathComponents[pathComponents.length - 1].generateComponent();
+    }
+
     async _changeView(routePath) {
-        if(!this.unknownViewActive){
+        if(routePath==this.currentView){
+            /*
+            If same path needs reloading the last child component is regenerated.
+            */
+            return await this._reconstructCurrentComponent(this.paths[this.currentView]);
+        }
+        else if(!this.unknownViewActive){
+            /*
+            If current path is not unknownView component
+            Current components are deconstructed.
+            */
             await this._deconstructPathComponents(
                                         this.paths[this.currentView],
                                         this.paths[routePath]

@@ -39,6 +39,7 @@ class Component {
     methods = {};
     metaData = {};
     dataField;
+    reloadOnDataChange;
 
     _active = false;
     _parent
@@ -144,7 +145,7 @@ class Component {
 
     async _reloadData(data){
         this.data = data
-        if(this._active === true) await this._reloadComponent()
+        if(this._active === true && this.reloadOnDataChange != false) await this._reloadComponent()
     }
 
     setQueryParams(params){

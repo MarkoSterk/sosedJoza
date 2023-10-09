@@ -10,7 +10,7 @@ import profileDataComponent from "./components/profile/childcomponents/profileDa
 import changePasswordComponent from "./components/profile/childcomponents/changePasswordComponent.js";
 import myAppliancesComponent from "./components/profile/childcomponents/myAppliancesComponent.js";
 import departmentsComponent from "./components/podrocja/departmentsComponent.js";
-import genericCategoryComponent from "./components/podrocja/genericCategoryComponent.js"
+import genericCategoryComponent from "./components/podrocja/childcomponents/genericCategoryComponent/genericCategoryComponent.js"
 import { loadUser } from "./components/utils/utilFuncs.js";
 
 
@@ -55,7 +55,6 @@ await app.addPaths({
                     "delavnica": {component: genericCategoryComponent},
                     "vrt": {component: genericCategoryComponent},
                     "multimedia": {component: genericCategoryComponent},
-                    "prosti%20čas": {component: genericCategoryComponent},
                     "ostalo": {component: genericCategoryComponent},
                 }
             }

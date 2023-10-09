@@ -8,7 +8,7 @@ async function searchPreviewMarkup(){
         return `
             <li class="my-1">
                 <a class="searchResult text-decoration-none text-reset" href="#predmet?id=${res.id}">
-                    [${res.department.toUpperCase()}] ${res.name}
+                    [${res.department.toUpperCase()}] ${res.name} (${res.owner.firstname} ${res.owner.lastname})
                 </a>
             </li>
         `

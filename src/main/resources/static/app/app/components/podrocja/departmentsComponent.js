@@ -1,9 +1,9 @@
 import Component from "../../../simpleJS/Component.js";
-import genericCategoryComponent from "./genericCategoryComponent.js";
+import genericCategoryComponent from "./childcomponents/genericCategoryComponent/genericCategoryComponent.js";
 
 async function departmentsMarkup(){
     return `
-        <div id="items"></div>
+        <div id="category"></div>
     `
 }
 

@@ -144,7 +144,6 @@ export async function loadUser(){
 
 export async function getItems(){
     let url = this.metaData.applianceUrl + this.queryParams;
-    console.log('Get URL: ', url);
     await axios.get(url)
     .then(function(response){
         this.setData('pagination', parsePagination(response.data.data));

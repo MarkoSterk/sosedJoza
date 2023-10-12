@@ -34,16 +34,16 @@ class Router {
         }
     }
 
-    async _deconstructPathComponents(oldPath, newPath){
+    async _deconstructPathComponents(oldPath){
         const oldPathReversed = oldPath.slice().reverse()
         for(let component of oldPathReversed){
-            if(!newPath.includes(component)) await component.deconstructComponent();
+            await component.deconstructComponent();
         }
     }
 
     async _constructPathComponents(newPath){
         for(let component of newPath){
-            if(!component._active) await component.generateComponent();
+            await component.generateComponent();
         }
     }
 
@@ -63,30 +63,23 @@ class Router {
             */
             return await this._reconstructCurrentComponent(this.paths[this.currentView]);
         }
-        else if(!this.unknownViewActive){
-            /*
-            If current path is not unknownView component
-            Current components are deconstructed.
-            */
-            await this._deconstructPathComponents(
-                                        this.paths[this.currentView],
-                                        this.paths[routePath]
-                                        )
-        }
-        else{
-            await this._deconstructPathComponents(this.paths[this.currentView],
-                                                    this.paths[routePath]);
-            await this.unknownView.deconstructComponent();
+        if(this.unknownViewActive){
+            this.unknownView.deconstructComponent();
             this.unknownViewActive = false;
+        } else{
+            await this._deconstructPathComponents(this.paths[this.currentView]);
         }
         await this._constructPathComponents(this.paths[routePath]);
         this.currentView = routePath;
     }
 
     async _unknownView() {
-        await this._deconstructPathComponents([], []);
-        await this.unknownView.generateComponent();
-        this.unknownViewActive = true;
+        if(!this.unknownViewActive){
+            await this._deconstructPathComponents(this.paths[this.currentView]);
+            await this.unknownView.generateComponent();
+            this.currentView = null;
+            this.unknownViewActive = true;
+        }
     }
 
     unknownViewComponent(component){
